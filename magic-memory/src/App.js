@@ -40,6 +40,8 @@ function App() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   // Tạo state để disable lượt click liên tục
   const [disabled, setDisabled] = useState(false);
+  const [foundPairs, setFoundPairs] = useState(0);
+  const [won, setWon] = useState(false);
 
   // Random card shuffle card
   let shuffleCard = () => {
@@ -52,6 +54,7 @@ function App() {
     setChoiceTwo(null);
     setCards(shuffleCard);
     setTurn(0);
+    setFoundPairs(0);
   };
 
   //Handle a choice
@@ -65,6 +68,7 @@ function App() {
       setDisabled(true);
 
       if (choiceOne.src === choiceTwo.src) {
+        makePair();
         //console.log("Bằng nhau");
         setCards((prevCards) => {
           return prevCards.map((card) => {
@@ -89,6 +93,10 @@ function App() {
     setChoiceTwo(null);
     setTurn((prevTurns) => prevTurns + 1);
     setDisabled(false);
+  };
+
+  const makePair = () => {
+    setFoundPairs((countPairs) => countPairs + 1);
   };
   // Nếu toàn bộ matched true , reset lại game
 
@@ -119,6 +127,7 @@ function App() {
         })}
       </div>
       <p>Turn: {turn}</p>
+      <p>Found pairs: {foundPairs}</p>
     </div>
   );
 }
